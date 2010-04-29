@@ -1,9 +1,6 @@
-#!/bin/sh
-
-#execute commands on remote servers
-#runremote --cmd "uptime"  --server colobus.isomerica.net --log colo.log
-
-#while read line; do echo $line $line $line; done < $FOO
+#!/bin/sh 
+# execute commands on remote servers
+# ./runremote --cmd 'uptime; echo ""; du -sh $HOME; echo ""; who' --server colobus --server common --logdir logs
 
 CMD=""
 SERVER=""
@@ -12,8 +9,6 @@ LOGDIR=""
 SERVERLIST=()
 SSHOPTIONS="-oConnectTimeout=5 -oBatchMode=yes"
 
-COLOR_LIGHT_PURPLE='\033[1;35m'
-COLOR_NC='\033[0m'
 
 usage()
 {
@@ -130,7 +125,7 @@ function stderr() {
     shift;
     echo -ne $COLOR >&2
     echo $@ >&2
-    echo -e $COLOR_NC >&2
+    echo -ne $COLOR_NC >&2
 }
 
 COLOR_BLACK='\033[0;30m'
@@ -156,7 +151,7 @@ for serv in ${SERVER[@]}; do
 
     if [[ -d "${LOGDIR}" ]]; then LOGFILE="${LOGDIR}/$serv.log"; fi
 
-    stderr $COLOR_LIGHT_GREEN "[$serv]"
+    stderr $COLOR_LIGHT_GREEN "[server: $serv log:$LOGFILE]"
 
     ( ssh $SSHOPTIONS $serv "$CMD" | tee -a $LOGFILE )
     stderr $COLOR_LIGHT_GREEN "[/$serv]"
