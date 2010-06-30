@@ -41,12 +41,12 @@ the previous command will execute <code>"df -hl"</code> on each of the servers l
 the data/tdlinx file.
 
 the <code>--bg</code> flag will cause the commands to be executed in parallel, opposed
-to waiting for server1 to finish before running the command on server2 the
+to waiting for server1 to finish before running the command on server2.
 
 <code>--header</code> flag adds a header row before printing the command's (buffered)
 output, this is simply to partition the output so for easier reading.
 
-<code>--list $file</code> to use $file as a list of target servers to run the command on
+<code>--list $file</code> to specify a $file which contains a list of servers.
 
 <code>ansi2html.sh</code> creates a pretty html file from shell output - colors and all :)
 
