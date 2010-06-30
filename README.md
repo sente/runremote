@@ -8,7 +8,7 @@ You can specify multiple servers with multiple <code>--server foo.com</code> dec
 
 ##### code:
 
-    runremote <code>--cmd "uptime; df -h; echo"</code> <code>--server remy</code> <code>--server ffc</code> <code>--server twg</code>
+    runremote --cmd "uptime; df -h; echo" --server remy --server ffc --server twg
 
 ##### results:
 
