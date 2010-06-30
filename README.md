@@ -8,6 +8,8 @@ You can specify multiple servers with multiple <code>--server foo.com</code> dec
 
 ##### code:
 
+    runremote --cmd *"uptime; df -h; echo"* --server *remy* --server *ffc* --server *twg*
+
     runremote "uptime; df -h; echo" on each of three servers set on the command line with the '--server' option:
 
 ##### results:
