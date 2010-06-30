@@ -3,7 +3,7 @@
 
 #### Specifying basic command line options:
 Set your command with the the <code>--cmd</code> argument and the target servers with the <code>--server</code> argument.
-You can specify multiple servers like <code>--server server-one.com --server server-two.com</code>
+You can specify multiple servers with multiple <code>--server foo.com</code> declarations.
 
 
 ##### code:
