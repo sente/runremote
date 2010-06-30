@@ -50,6 +50,5 @@ output, this is simply to partition the output so for easier reading.
 
 <code>ansi2html.sh</code> creates a pretty html file from shell output - colors and all :)
 
-
-[df-report.sh](http://www.sente.cc/misc/df-report.html "http://www.sente.cc/misc/df-report.html")
+You can see the generated html output here: [df-report.html](http://www.sente.cc/misc/df-report.html "http://www.sente.cc/misc/df-report.html")
 
