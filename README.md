@@ -1,14 +1,16 @@
 
 ### Some examples:
 
-#### Specify the command to run with the <code>--cmd</code> argument and the <code>--server</code> option for each server you wish to run it on. 
+#### Specifying basic command line options:
+Set your command with the the <code>--cmd</code> argument and the target servers with the <code>--server</code> argument.
+You can specify multiple servers like <code>--server server-one.com --server server-two.com</code>
 
 
-####code:
+##### code:
 
     runremote "uptime; df -h; echo" on each of three servers set on the command line with the '--server' option:
 
-####results:
+##### results:
 
     stu@sente ~/scratch $ runremote --cmd "uptime; df -h; echo" --server remy --server ffc --server twg
      15:48:45 up 245 days, 17:38,  1 user,  load average: 0.12, 0.11, 0.04
