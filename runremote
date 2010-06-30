@@ -6,6 +6,9 @@ CMD=""
 SERVER=""
 LOGFILE=""
 LOGDIR=""
+HEADER=0
+BACKGROUND=0
+HTMLLOG=0
 SERVERLIST=()
 SSHOPTIONS="-oConnectTimeout=5 -oBatchMode=yes"
 
@@ -25,6 +28,12 @@ Usage:
             [ --list-of-servers | --list | -list "..." ]
                     a file containing each server, OR
                     "-" to read servers from the command line
+
+            [ --html ]
+                log to an html file
+
+            [ --header ]
+                print the server name before each commmand
 
             [ --log | -log | -l "..." ]
                 capture all output to a single log file
@@ -46,10 +55,8 @@ usage_and_exit()
 
 PROGRAM=`basename $0`
 
-
-
 while test $# -gt 0; do
-
+    
 	case $1 in
 
 	--command | --cmd | --c | -c | -cmd )
@@ -57,10 +64,15 @@ while test $# -gt 0; do
 		CMD="$1"
 		;;
 
+	--bg | --thread )
+		BACKGROUND=1
+		;;
+
 	--server | -s )
 		shift
 		SERVER+=("$1")
 		;;
+
 
 	--help | --hel | --he | --h | '--?' | -help | -hel | -he | -h | '-?' )
 		usage_and_exit 0
@@ -71,7 +83,7 @@ while test $# -gt 0; do
 		LOGFILE=$1
 		;;
 
-	--list-of-servers | -list | --list )
+	--listofservers | -list | --list )
 		shift
 		SERVERLIST=$1
         if [[ "${SERVERLIST}" == "-" ]] ; then SERVERLIST=/dev/stdin; fi
@@ -84,6 +96,14 @@ while test $# -gt 0; do
 
 	--debug | -d | --test | --echo )
         function ssh () { echo ssh "$@"; }
+		;;
+        
+	--header )
+        HEADER=1
+		;;
+
+	--html )
+		HTMLLOG=$1
 		;;
 
 	-*)
@@ -100,19 +120,14 @@ done
 
 
 
-
 if [[ -f "${SERVERLIST}" || "${SERVERLIST}" = "/dev/stdin" ]]; then
     while read line; do
         SERVER+=("$line")
     done <${SERVERLIST}
 fi
 
-
-
-
-
-
 MASTERLOG=logs/masterlog.txt
+
 function logger() {
     echo "[[$@]]" > $MASTERLOG
     while read line;
@@ -121,11 +136,21 @@ function logger() {
 }
 
 function stderr() {
+if [ $HEADER -ne 1 ]; then return; fi
     COLOR=$1
     shift;
     echo -ne $COLOR >&2
     echo $@ >&2
     echo -ne $COLOR_NC >&2
+}
+
+function stdout() {
+#if [ $HEADER -ne 1 ]; then return; fi
+    COLOR=$1
+    shift;
+    echo -ne "$COLOR" #>&2
+    echo "$@" >&2
+    echo -ne "$COLOR_NC" #>&2
 }
 
 COLOR_BLACK='\033[0;30m'
@@ -146,14 +171,38 @@ COLOR_RED='\033[0;31m'
 COLOR_WHITE='\033[1;37m'
 COLOR_YELLOW='\033[1;33m'
 
+#TODO FIX ME!!!
+rm tmplog.log 2>/dev/null
+
+
+function LOGFUNC() {
+    if [ -d "${LOGDIR}" ]; then
+        cat "${UNIQ}" > "${LOGDIR}/${serv}.log"
+    fi
+}
 
 for serv in ${SERVER[@]}; do
 
+    UNIQ=$(date +%s).${serv}.tmp
+
+    [[ -z "${LOGDIR}" ]] || [[ -d "${LOGDIR}" ]] || mkdir "${LOGDIR}"
     if [[ -d "${LOGDIR}" ]]; then LOGFILE="${LOGDIR}/$serv.log"; fi
 
-    stderr $COLOR_LIGHT_GREEN "[server: $serv log:$LOGFILE]"
+    (( stderr $COLOR_LIGHT_GREEN "$serv"; ssh -n $SSHOPTIONS $serv "$CMD" 2>/dev/null ) 1>${UNIQ} 2>&1 ; cat ${UNIQ}; LOGFUNC; rm ${UNIQ}) &
 
-    ( ssh $SSHOPTIONS $serv "$CMD" | tee -a $LOGFILE )
-    stderr $COLOR_LIGHT_GREEN "[/$serv]"
+    #if we're not running the commands in the background, then WAIT for the command to finish...
+    [[ $BACKGROUND = 0 ]] && wait 
+
 done
 
+wait
+
+
+
+
+#if [[ ${HTMLLOG} != 0 ]]; then
+#    cat tmplog.log | ansi2html.sh --bg=dark > ${HTMLLOG}
+#fi
+#rm tmplog.$$.log
+
+#stderr $COLOR_LIGHT_GREEN "[/$serv]"
