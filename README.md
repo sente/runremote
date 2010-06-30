@@ -1,9 +1,7 @@
 
 ### Some examples:
 
-#### using <code>--cmd</code> to set your command and 
-#### <code>--server</code> for each server
-
+#### Specify the command to run with the <code>--cmd</code> argument and the <code>--server</code> option for each server you wish to run it on. 
 
 
 ####code:
