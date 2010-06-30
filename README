@@ -17,3 +17,9 @@ tmpfs                  12G     0   12G   0% /lib/init/rw
 tmpfs                  12G     0   12G   0% /dev/shm
 simfs                 1.1T  879G  220G  81% /
 
+
+
+
+./runremote --cmd "df -hl 2>/dev/null" --list data/tdlinx.txt --thread --bg --header | ansi2html.sh --bg=dark > df-report.html
+
+#df-report.html can be seen at http://www.sente.cc/misc/df-report.html
