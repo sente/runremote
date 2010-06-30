@@ -1,8 +1,6 @@
-example usage i.e. 'documenation':
-==================================
+#### example usage i.e. 'documenation'
 
-Example 1
-=========
+## Example 1
 
 #run "uptime; df -h; echo" on each of three servers set on the command line with the '--server' option:
 
@@ -26,8 +24,7 @@ Example 1
     simfs                 1.1T  879G  220G  81% /
 
 
-Example 2
-=========
+## Example 2
 
 ./runremote --cmd "df -hl" --list data/tdlinx.txt --thread --bg --header | ansi2html.sh --bg=dark > df-report.html
 
