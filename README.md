@@ -1,6 +1,6 @@
-#### example usage i.e. 'documenation'
+## example usage i.e. 'documenation'
 
-## Example 1
+### Example 1
 
 #run "uptime; df -h; echo" on each of three servers set on the command line with the '--server' option:
 
@@ -24,19 +24,19 @@
     simfs                 1.1T  879G  220G  81% /
 
 
-## Example 2
+### Example 2
 
-./runremote --cmd "df -hl" --list data/tdlinx.txt --thread --bg --header | ansi2html.sh --bg=dark > df-report.html
+    ./runremote --cmd "df -hl" --list data/tdlinx.txt --thread --bg --header | ansi2html.sh --bg=dark > df-report.html
 
-# the previous command will execute "df -hl" on each of the servers listed in
-# the data/tdlinx file.
+    # the previous command will execute "df -hl" on each of the servers listed in
+    # the data/tdlinx file.
 
-# the '--bg' flag will cause the commands to be executed in parallel, opposed
-# to waiting for server1 to finish before running the command on server2 the
+    # the '--bg' flag will cause the commands to be executed in parallel, opposed
+    # to waiting for server1 to finish before running the command on server2 the
 
-# '--header' flag adds a header row before printing the command's (buffered)
-# output, this is simply to partition the output so for easier reading.
+    # '--header' flag adds a header row before printing the command's (buffered)
+    # output, this is simply to partition the output so for easier reading.
 
-# ansi2html.sh creates a pretty html file from shell output - colors and all :)
+    # ansi2html.sh creates a pretty html file from shell output - colors and all :)
 
-# http://www.sente.cc/misc/df-report.html
+    # http://www.sente.cc/misc/df-report.html
