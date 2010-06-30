@@ -46,7 +46,7 @@ to waiting for server1 to finish before running the command on server2.
 <code>--header</code> flag adds a header row before printing the command's (buffered)
 output, this is simply to partition the output so for easier reading.
 
-<code>--list $file</code> to specify a $file which contains a list of servers.
+<code>--list</code> to specify a which contains a list of servers.
 
 <code>ansi2html.sh</code> creates a pretty html file from shell output - colors and all :)
 
