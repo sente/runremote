@@ -1,13 +1,17 @@
 
 ### Some examples:
 
-#### Specifying servers on the command line with "--server"
+#### using <code>--cmd</code> to set your command and 
+#### <code>--server</code> for each server
 
 
 
 ####code:
+
     runremote "uptime; df -h; echo" on each of three servers set on the command line with the '--server' option:
+
 ####results:
+
     stu@sente ~/scratch $ runremote --cmd "uptime; df -h; echo" --server remy --server ffc --server twg
      15:48:45 up 245 days, 17:38,  1 user,  load average: 0.12, 0.11, 0.04
     Filesystem            Size  Used Avail Use% Mounted on
