@@ -1,6 +1,12 @@
 #!/bin/sh 
-# execute commands on remote servers
+
+# Stuart Powers
+# stuart.powers@gmail.com
+# http://www.sente.cc/
+
+# execute commands on remote servers:
 # ./runremote --cmd 'uptime; echo ""; du -sh $HOME; echo ""; who' --server colobus --server common --logdir logs
+
 
 CMD=""
 SERVER=""
@@ -190,8 +196,7 @@ for serv in ${SERVER[@]}; do
 
     (( stderr $COLOR_LIGHT_GREEN "$serv"; ssh -n $SSHOPTIONS $serv "$CMD" 2>/dev/null ) 1>${UNIQ} 2>&1 ; cat ${UNIQ}; LOGFUNC; rm ${UNIQ}) &
 
-    #if we're not running the commands in the background, then WAIT for the command to finish...
-    [[ $BACKGROUND = 0 ]] && wait 
+    [[ $BACKGROUND = 0 ]] && wait #let's not be hasty!
 
 done
 
@@ -200,9 +205,3 @@ wait
 
 
 
-#if [[ ${HTMLLOG} != 0 ]]; then
-#    cat tmplog.log | ansi2html.sh --bg=dark > ${HTMLLOG}
-#fi
-#rm tmplog.$$.log
-
-#stderr $COLOR_LIGHT_GREEN "[/$serv]"
